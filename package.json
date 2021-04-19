@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/nicoletribo/HW12-Employee-Tracker-NLT#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "dotenv": "^8.2.0",
     "inquirer": "^8.0.0",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "press-any-key": "^0.1.1"
   }
 }
