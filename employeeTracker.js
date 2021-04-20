@@ -20,7 +20,7 @@ const mainMenu = () => {
         name: 'start',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employee', 'Update Employee Roles', 'Exit'],
+        choices: ['Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employee', 'Update Employee Role', 'Exit'],
     })
     .then((answer) => {
         switch (answer.start) {
@@ -203,57 +203,57 @@ const viewEmp = () => {
     });
 }
 const updateEmp = () => {
-    connection.query('SELECT * FROM employee', (err, results) => {
-        if (err) throw err;
-        inquirer
-        .prompt([
-            {
-                name: 'updateEmp',
-                type:'rawlist',
-                choices: () => {
-                    const empRoles = [];
-                    results.forEach(({ first_name, last_name, id }) => {
-                        empRoles.push({ name: `${first_name} ${last_name}`, value: id })
-                    })
+    connection.query(
+        'SELECT * FROM employee', (err, results) => {
+            if (err) throw err;
+            inquirer
+            .prompt([
+                {
+                    name: 'updateEmp',
+                    type:'rawlist',
+                    choices: () => {
+                        const empRoles = [];
+                        results.forEach(({ first_name, last_name, id }) => {
+                            empRoles.push({ name: `${first_name} ${last_name}`, value: id })
+                        })
                     return (empRoles);
+                    }
                 }
-            }
-        ])
-        .then((answers) => {
-            newRole(answers.updateEmp);
+            ])
+            .then((answers) => {
+                newRole(answers.updateEmp);
         });
     })
 }
 const newRole = (employee) => {
-    connection.query('SELECT * FROM role', (err, results) => {
-        if (err) throw err;
-        inquirer
-        .prompt([
-            {
-                name: 'newRole',
-                type: 'rawlist',
-                choices: () => {
-                    const roleIDs = [];
-                    results.forEach(({ id, title }) => {
-                        roleIDs.push({ name: title, value: id })
-                    })
-                    return (roleIDs);
+    connection.query(
+        'SELECT * FROM role', (err, results) => {
+            if (err) throw err;
+            inquirer
+            .prompt([
+                {  
+                    name: 'newRole',
+                    type: 'rawlist',
+                    choices: () => {
+                        const roleIDs = [];
+                        results.forEach(({ id, title }) => {
+                            roleIDs.push({ name: title, value: id })
+                        })
+                        return (roleIDs);
+                    }   
                 }
-            }
-        ])
-        .then((answers) => {
-            connection.query(
-              'UPDATE employee SET role_id=? WHERE id=?', 
-              [answers.newRole, employee], (err, results) => {
-                if (err) throw err;
-                console.log(`Employee role has been updated.`)
-                pressAnyKey()
-                  .then(() => {
-                    mainMenu();
-                  }
-                  )
-              })
-          })
+            ])
+            .then((answers) => {
+                connection.query(
+                    'UPDATE employee SET role_id=? WHERE id=?', [answers.newRole, employee], (err, results) => {
+                        if (err) throw err;
+                        console.log(`Employee role has been updated.`)
+                        pressAnyKey()
+                        .then(() => {
+                            mainMenu();
+                        })
+                    })
+            })
     })
 }
 const exitProgram = () => {
