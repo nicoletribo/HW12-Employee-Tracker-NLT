@@ -12,7 +12,7 @@ We had to build a command-line application using MYSQL and Inquirer that allows 
 
 ## Video Link
 
-Watch the application demonstration here:
+Watch the application demonstration here: https://drive.google.com/file/d/1qT_--z64QgaOzimIWKfuKNoV2bvFrmFR/view
 
 
 ## Questions
